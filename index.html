@@ -547,20 +547,41 @@
         </div>
     </div>
 
-    <script>
-        // Optimized 3D Background with Three.js
-        const scene = new THREE.Scene();
-        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-        const renderer = new THREE.WebGLRenderer({
-            canvas: document.getElementById('bg-canvas'),
+   <script>
+    // Optimized 3D Background with Three.js - Mobile Compatible
+    let scene, camera, renderer;
+    let torus, box, sphere;
+    let animationId;
+
+    function initThreeJS() {
+        // Check if WebGL is supported
+        if (!WEBGL.isWebGLAvailable()) {
+            const warning = WEBGL.getWebGLErrorMessage();
+            document.getElementById('bg-canvas').appendChild(warning);
+            return;
+        }
+
+        scene = new THREE.Scene();
+        camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+        
+        // Get canvas element
+        const canvas = document.getElementById('bg-canvas');
+        
+        // Create renderer with better mobile compatibility
+        renderer = new THREE.WebGLRenderer({
+            canvas: canvas,
             alpha: true,
-            antialias: false
+            antialias: false,
+            powerPreference: "low-power" // Better for mobile
         });
-
-        renderer.setSize(window.innerWidth, window.innerHeight);
+        
+        // Handle context loss
+        renderer.context.getExtension('WEBGL_lose_context').loseContext();
+        
         renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.5));
+        resizeRenderer();
 
-        // Simplified geometry for better performance
+        // Simplified geometry for better mobile performance
         const geometry = new THREE.TorusGeometry(6, 1.5, 8, 16);
         const material = new THREE.MeshBasicMaterial({ 
             color: 0x54a8fc,
@@ -568,7 +589,7 @@
             transparent: true,
             opacity: 0.2
         });
-        const torus = new THREE.Mesh(geometry, material);
+        torus = new THREE.Mesh(geometry, material);
         scene.add(torus);
 
         const boxGeometry = new THREE.BoxGeometry(3, 3, 3);
@@ -578,7 +599,7 @@
             transparent: true,
             opacity: 0.15
         });
-        const box = new THREE.Mesh(boxGeometry, boxMaterial);
+        box = new THREE.Mesh(boxGeometry, boxMaterial);
         box.position.set(-10, 6, -6);
         scene.add(box);
 
@@ -589,11 +610,74 @@
             transparent: true,
             opacity: 0.1
         });
-        const sphere = new THREE.Mesh(sphereGeometry, sphereMaterial);
+        sphere = new THREE.Mesh(sphereGeometry, sphereMaterial);
         sphere.position.set(10, -6, -4);
         scene.add(sphere);
 
         camera.position.setZ(20);
+        
+        // Start animation
+        animate();
+    }
+
+    function resizeRenderer() {
+        if (!renderer) return;
+        
+        const width = window.innerWidth;
+        const height = window.innerHeight;
+        
+        camera.aspect = width / height;
+        camera.updateProjectionMatrix();
+        renderer.setSize(width, height);
+    }
+
+    // Optimized animation loop with mobile considerations
+    function animate() {
+        animationId = requestAnimationFrame(animate);
+        
+        // Slower animation on mobile to save battery
+        const isMobile = /Mobi|Android/i.test(navigator.userAgent);
+        const speedFactor = isMobile ? 0.5 : 1;
+        
+        torus.rotation.x += 0.005 * speedFactor;
+        torus.rotation.y += 0.003 * speedFactor;
+        box.rotation.x += 0.006 * speedFactor;
+        box.rotation.y += 0.006 * speedFactor;
+        sphere.rotation.x += 0.003 * speedFactor;
+        sphere.rotation.y += 0.005 * speedFactor;
+
+        renderer.render(scene, camera);
+    }
+
+    // Handle window resize
+    window.addEventListener('resize', function() {
+        resizeRenderer();
+    });
+
+    // Initialize Three.js when DOM is loaded
+    document.addEventListener('DOMContentLoaded', function() {
+        // Add WEBGL check script dynamically
+        const script = document.createElement('script');
+        script.src = 'https://threejs.org/examples/js/WebGL.js';
+        script.onload = initThreeJS;
+        document.head.appendChild(script);
+        
+        // Handle page visibility changes (important for mobile)
+        document.addEventListener('visibilitychange', function() {
+            if (document.hidden) {
+                if (animationId) {
+                    cancelAnimationFrame(animationId);
+                    animationId = null;
+                }
+            } else {
+                if (!animationId) {
+                    animate();
+                }
+            }
+        });
+    });
+
+
 
         // Optimized animation loop
         let frameCount = 0;
