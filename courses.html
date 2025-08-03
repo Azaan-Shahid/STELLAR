@@ -13,11 +13,11 @@
         @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Inter:wght@300;400;600;700&display=swap');
         
         :root {
-            --primary: #54a8fc;
-            --secondary: #ff6b6b;
-            --accent: #4ecdc4;
-            --dark: #121212;
-            --surface: rgba(30, 39, 46, 0.8);
+            --primary: #8B4513; /* Brown */
+            --secondary: #FFFFFF; /* White */
+            --accent: #000000; /* Black */
+            --dark: #1A120B;
+            --surface: rgba(139, 69, 19, 0.8); /* Brown with opacity */
             --light: #ffffff;
             --gray: #414344;
         }
@@ -30,7 +30,7 @@
         }
 
         body {
-            background: linear-gradient(135deg, #0c0c0c 0%, #1a1a2e 50%, #16213e 100%);
+            background: linear-gradient(135deg, #1A120B 0%, #3C2A21 50%, #1A120B 100%);
             color: white;
             font-family: 'Inter', sans-serif;
             overflow-x: hidden;
@@ -47,95 +47,200 @@
             height: 100%;
         }
 
-        /* Navigation - FIXED FOR MOBILE */
+        /* Sidebar Menu */
+        .sidebar {
+            position: fixed;
+            left: -300px;
+            top: 0;
+            width: 300px;
+            height: 100vh;
+            background: var(--dark);
+            z-index: 1001;
+            transition: all 0.3s ease;
+            box-shadow: 5px 0 15px rgba(0, 0, 0, 0.3);
+            overflow-y: auto;
+        }
+
+        .sidebar.active {
+            left: 0;
+        }
+
+        .sidebar-header {
+            padding: 20px;
+            background: var(--primary);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .sidebar-header img {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: white;
+            padding: 5px;
+        }
+
+        .sidebar-menu {
+            padding: 20px 0;
+        }
+
+        .sidebar-menu li {
+            list-style: none;
+        }
+
+        .sidebar-menu a {
+            display: block;
+            padding: 15px 25px;
+            color: white;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            border-left: 4px solid transparent;
+        }
+
+        .sidebar-menu a:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-left: 4px solid var(--primary);
+        }
+
+        .sidebar-menu a i {
+            margin-right: 10px;
+            width: 20px;
+            text-align: center;
+        }
+
+        .close-sidebar {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 20px;
+            cursor: pointer;
+        }
+
+        /* Overlay for sidebar */
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            display: none;
+        }
+
+        .overlay.active {
+            display: block;
+        }
+
+
+        /* Navigation */
         .nav-container {
-            background: rgba(30, 39, 46, 0.95);
-            padding: 0.75rem 1rem;
-            border-radius: 2rem;
+            background: white;
+            padding: 0.5rem 1.5rem;
+            border-radius: 1.5rem;
             backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(0, 0, 0, 0.1);
             position: fixed;
             top: 10px;
             left: 50%;
             transform: translateX(-50%);
             z-index: 1000;
             transition: all 0.3s ease;
-            width: 95%;
+            width: 90%;
             max-width: 1200px;
             box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
         }
 
         .nav-menu {
             display: flex;
-            gap: 1rem;
+            gap: 1.5rem;
             list-style: none;
             align-items: center;
             justify-content: space-between;
-            padding: 0 0.5rem;
-            flex-wrap: wrap;
+            padding: 0 1rem;
         }
 
         .nav-item {
             position: relative;
             cursor: pointer;
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            padding: 0.4rem 0.8rem;
+            padding: 0.5rem 1rem;
             border-radius: 0.5rem;
-            font-size: 14px;
         }
 
         .nav-item:hover {
-            background: rgba(84, 168, 252, 0.2);
+            background: rgba(139, 69, 19, 0.2);
             transform: translateY(-2px);
         }
 
-        /* Flip Card Styles - ENHANCED FOR MOBILE */
-        .flip-card {
-            background-color: transparent;
+        .nav-item a {
+            color: black;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .nav-item a:hover {
+            color: #8B4513;
+        }
+
+        /* Menu Toggle Button */
+        .menu-toggle {
+            display: block;
+            background: none;
+            border: none;
+            color: black;
+            font-size: 24px;
+            cursor: pointer;
+            margin-right: 15px;
+        }
+
+        /* Enhanced Course Cards */
+        .course-container {
+            position: relative;
             width: 320px;
             height: 520px;
-            perspective: 1000px;
-            margin: 20px auto;
+            transition: 200ms;
+            margin: 20px;
         }
 
-        .flip-card-inner {
-            position: relative;
-            width: 100%;
-            height: 100%;
-            text-align: center;
-            transition: transform 0.8s;
-            transform-style: preserve-3d;
+        .course-container:active {
+            width: 315px;
+            height: 515px;
         }
 
-        .flip-card:hover .flip-card-inner {
-            transform: rotateY(180deg);
-        }
-
-        .flip-card-front, .flip-card-back {
+        .course-card {
             position: absolute;
+            inset: 0;
+            z-index: 0;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
+            align-items: center;
+            border-radius: 20px;
+            transition: all 0.3s ease;
+            background: linear-gradient(145deg, #3C2A21, #1A120B);
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            padding: 25px 20px;
+            color: white;
+        }
+
+        .course-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(139, 69, 19, 0.3);
+        }
+
+        .course-image {
+            position: absolute;
+            top: 0;
+            left: 0;
             width: 100%;
             height: 100%;
-            -webkit-backface-visibility: hidden;
-            backface-visibility: hidden;
-            border-radius: 20px;
-            padding: 25px 20px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-        }
-
-        .flip-card-front {
-            background: linear-gradient(145deg, #1e293b, #334155);
-            border: 2px solid rgba(255, 255, 255, 0.1);
-            color: white;
-        }
-
-        .flip-card-back {
-            background: linear-gradient(145deg, #1a202c, #2d3748);
-            border: 2px solid rgba(84, 168, 252, 0.3);
-            transform: rotateY(180deg);
-            color: white;
+            object-fit: cover;
+            z-index: -1;
+            opacity: 0.3;
         }
 
         .course-title {
@@ -143,34 +248,38 @@
             font-weight: 800;
             letter-spacing: 1px;
             text-align: center;
-            background: linear-gradient(45deg, #00ffaa, #00a2ff);
+            background: linear-gradient(45deg, #8B4513, #A0522D);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             margin-bottom: 10px;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.5);
+            color: #8B4513; /* Added dark color for better visibility */
         }
 
         .course-age {
             font-size: 16px;
-            color: rgba(255, 255, 255, 0.8);
+            color: rgba(255, 255, 255, 0.9);
             margin-bottom: 15px;
             font-weight: 500;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.7);
         }
 
         .course-modules, .course-duration {
-            background: rgba(84, 168, 252, 0.2);
-            padding: 8px 14px;
+            background: rgba(139, 69, 19, 0.5);
+            padding: 6px 12px;
             border-radius: 15px;
             font-weight: 600;
-            margin-bottom: 10px;
+            margin-bottom: 8px;
             font-size: 14px;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
         }
 
         .course-price {
-            font-size: 26px;
+            font-size: 24px;
             font-weight: bold;
-            color: #00ffaa;
+            color: #8B4513;
             margin-bottom: 15px;
-            text-shadow: 0 0 10px rgba(0, 255, 170, 0.3);
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
         }
 
         .course-highlights {
@@ -182,9 +291,10 @@
 
         .course-highlights h4 {
             font-size: 16px;
-            margin-bottom: 12px;
-            color: #54a8fc;
+            margin-bottom: 10px;
+            color: #8B4513;
             font-weight: 600;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
         }
 
         .course-highlights ul {
@@ -193,173 +303,78 @@
         }
 
         .course-highlights li {
-            margin: 8px 0;
+            margin: 5px 0;
             display: flex;
             align-items: center;
             font-size: 13px;
             color: rgba(255, 255, 255, 0.9);
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
         }
 
         .course-highlights i {
-            margin-right: 10px;
-            color: #4ecdc4;
-            width: 18px;
+            margin-right: 8px;
+            color: #8B4513;
+            width: 16px;
         }
 
-        /* ENHANCED Enroll Now Button Styles - MORE VISIBLE */
+        /* Enroll Now Button Styles */
         .enroll-btn {
-            background: linear-gradient(45deg, #54a8fc, #4ecdc4);
+            background: transparent;
             color: white;
             border: none;
-            padding: 16px 24px;
-            border-radius: 12px;
+            padding: 12px 24px;
+            border-radius: 0;
             font-weight: bold;
             cursor: pointer;
-            transition: all 0.4s ease;
+            transition: all 0.5s ease;
             position: relative;
             overflow: hidden;
             width: 100%;
-            font-size: 16px;
+            font-size: 14px;
             margin-top: 15px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            box-shadow: 0 4px 15px rgba(84, 168, 252, 0.4);
+            border-bottom: 2px solid rgba(139, 69, 19, 0.3);
         }
 
         .enroll-btn::before {
             content: "";
             position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-            transition: left 0.6s;
+            left: 0;
+            bottom: 0;
+            height: 2px;
+            width: 0;
+            background-color: #8B4513;
+            transition: 0.5s ease;
         }
 
         .enroll-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(84, 168, 252, 0.6);
-            background: linear-gradient(45deg, #4ecdc4, #54a8fc);
+            color: white;
+            background: transparent;
         }
 
         .enroll-btn:hover::before {
-            left: 100%;
-        }
-
-        .enroll-btn:active {
-            transform: translateY(0);
-        }
-
-        /* Form Styles */
-        .form-group {
-            margin-bottom: 20px;
-        }
-
-        .form-group label {
-            display: block;
-            margin-bottom: 8px;
-            font-weight: 600;
-            color: #54a8fc;
-        }
-
-        .form-group input,
-        .form-group select,
-        .form-group textarea {
             width: 100%;
-            padding: 12px;
-            border: 2px solid rgba(255, 255, 255, 0.1);
-            border-radius: 10px;
-            background: rgba(255, 255, 255, 0.1);
-            color: white;
-            font-size: 16px;
-            transition: border-color 0.3s ease;
         }
 
-        .form-group input:focus,
-        .form-group select:focus,
-        .form-group textarea:focus {
-            outline: none;
-            border-color: #54a8fc;
-            box-shadow: 0 0 10px rgba(84, 168, 252, 0.3);
-        }
-
-        .form-group option {
-            background: #1e293b;
-            color: white;
-        }
-
-        .submit-btn {
-            background: linear-gradient(45deg, #54a8fc, #4ecdc4);
-            color: white;
-            border: none;
-            padding: 15px 30px;
-            border-radius: 12px;
-            font-weight: bold;
-            cursor: pointer;
-            transition: all 0.4s ease;
-            position: relative;
-            overflow: hidden;
-            width: 100%;
-            font-size: 16px;
-            margin-top: 15px;
-            box-shadow: 0 4px 15px rgba(84, 168, 252, 0.4);
-        }
-
-        .submit-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(84, 168, 252, 0.6);
-        }
-
-        /* Modal Styles */
-        .modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.8);
-            z-index: 10000;
-            justify-content: center;
-            align-items: center;
-            backdrop-filter: blur(5px);
-            overflow-y: auto;
-            padding: 20px;
-        }
-
-        .modal-content {
-            background: linear-gradient(145deg, #1e293b, #334155);
-            padding: 30px;
-            border-radius: 15px;
-            width: 100%;
-            max-width: 500px;
-            max-height: 90vh;
-            overflow-y: auto;
-            border: 2px solid rgba(84, 168, 252, 0.3);
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-            position: relative;
-        }
-
-        .close-modal {
+        .enroll-btn::after {
+            content: "";
             position: absolute;
-            top: 15px;
-            right: 15px;
-            font-size: 24px;
-            color: #ff6b6b;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            z-index: 1;
+            left: 0;
+            bottom: 0;
+            height: 0;
+            width: 100%;
+            background-color: rgba(139, 69, 19, 0.2);
+            transition: 0.4s ease;
+            z-index: -1;
         }
 
-        .close-modal:hover {
-            transform: rotate(90deg);
-            color: #ff4757;
+        .enroll-btn:hover::after {
+            height: 100%;
+            transition-delay: 0.4s;
         }
 
         /* Programs Section */
         .program-card {
-            background: rgba(30, 39, 46, 0.8);
+            background: rgba(26, 18, 11, 0.8);
             backdrop-filter: blur(10px);
             border: 1px solid rgba(255, 255, 255, 0.2);
             border-radius: 20px;
@@ -371,7 +386,7 @@
 
         .program-card:hover {
             transform: translateY(-10px);
-            box-shadow: 0 20px 40px rgba(84, 168, 252, 0.3);
+            box-shadow: 0 20px 40px rgba(139, 69, 19, 0.3);
         }
 
         .program-icon {
@@ -386,7 +401,7 @@
             color: white;
         }
 
-        /* Hero Section - FIXED PADDING FOR MOBILE */
+        /* Hero Section */
         .hero {
             height: 70vh;
             display: flex;
@@ -395,16 +410,42 @@
             text-align: center;
             position: relative;
             overflow: hidden;
-            margin-top: 100px;
-            padding: 0 20px;
-            padding-top: 120px;
+            margin-top: 80px;
         }
+
+        
+         .hero .action-btn {
+               opacity: 1 !important;
+               visibility: visible !important;
+        }
+
+        
+          .hero .action-btn {
+             background: black !important; /* Black background */
+             color: white !important;
+             border: 2px solid #8B4513 !important; /* Brown border */
+          }
+
+         .hero .action-btn:hover {
+               background: #8B4513 !important; 
+               color: white !important;
+               border-color: black !important;
+         }
+
+
+         .hero .action-btn::before {
+               background: white !important; /* White underline animation */
+          }
+
+         .hero .action-btn:hover::after {
+               background: rgba(0, 0, 0, 0.3) !important; /* Dark hover effect */
+          }
 
         .hero h1 {
             font-family: 'Orbitron', monospace;
             font-size: clamp(2.5rem, 6vw, 4rem);
             font-weight: 900;
-            background: linear-gradient(45deg, #54a8fc, #4ecdc4, #ff6b6b);
+            background: linear-gradient(45deg, #8B4513, #FFFFFF, #000000);
             background-size: 400% 400%;
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
@@ -418,15 +459,15 @@
             50% { background-position: 100% 50%; }
         }
 
-        /* Testimonial Cards from Uiverse.io */
+        /* Testimonial Cards */
         .testimonial-card {
-            --background: linear-gradient(to left, #f7ba2b 0%, #ea5358 100%);
+            --background: linear-gradient(to left, #8B4513 0%, #A0522D 100%);
             width: 300px;
             height: 400px;
             padding: 5px;
             border-radius: 1rem;
             overflow: visible;
-            background: #f7ba2b;
+            background: #8B4513;
             background: var(--background);
             position: relative;
             z-index: 1;
@@ -444,7 +485,7 @@
             width: 100%;
             transform: scale(0.8);
             filter: blur(25px);
-            background: #f7ba2b;
+            background: #8B4513;
             background: var(--background);
             transition: opacity .5s;
         }
@@ -477,13 +518,13 @@
         }
 
         .testimonial-card:hover .testimonial-info {
-            color: #f7ba2b;
+            color: #8B4513;
             transition: color 1s;
         }
 
-        /* Team Member Cards - FIXED AVATAR SIZE */
+        /* Team Member Cards */
         .team-card {
-            background: rgba(30, 39, 46, 0.8);
+            background: rgba(26, 18, 11, 0.8);
             backdrop-filter: blur(10px);
             border: 1px solid rgba(255, 255, 255, 0.2);
             border-radius: 20px;
@@ -495,7 +536,7 @@
 
         .team-card:hover {
             transform: translateY(-10px);
-            box-shadow: 0 20px 40px rgba(84, 168, 252, 0.3);
+            box-shadow: 0 20px 40px rgba(139, 69, 19, 0.3);
         }
 
         .team-avatar {
@@ -503,7 +544,7 @@
             height: 150px;
             border-radius: 50%;
             margin: 0 auto 20px;
-            background: linear-gradient(45deg, #54a8fc, #4ecdc4);
+            background: linear-gradient(45deg, #8B4513, #A0522D);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -519,60 +560,107 @@
             border-radius: 50%;
         }
 
-        /* School Slider - OPTIMIZED ANIMATION SPEED */
-        .schools-slider {
-            overflow: hidden;
-            position: relative;
-            background: rgba(0, 0, 0, 0.1);
-            border-radius: 20px;
-            padding: 20px 0;
-        }
+       /* Enhanced School Slider */
+.schools-slider {
+    overflow: hidden;
+    position: relative;
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 20px;
+    padding: 30px 0;
+    margin: 0 auto;
+    max-width: 1200px;
+}
 
-        .schools-track {
-            display: flex;
-            animation: slide 15s linear infinite;
-            gap: 30px;
-            will-change: transform;
-        }
+.schools-track {
+    display: flex;
+    animation: slide 15s linear infinite;
+    gap: 40px;
+    will-change: transform;
+    align-items: center;
+    padding: 20px 0;
+}
 
-        .school-item {
-            min-width: 200px;
-            height: 120px;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 15px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            margin: 0 15px;
-            font-weight: bold;
-            font-size: 16px;
-            padding: 15px;
-            transition: all 0.3s ease;
-            backdrop-filter: blur(10px);
-        }
+.school-item {
+    min-width: 280px; /* Increased from 200px */
+    height: 180px; /* Increased from 120px */
+    background: rgba(255, 255, 255, 0.08);
+    border-radius: 15px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: 0 10px;
+    padding: 20px;
+    transition: all 0.4s ease;
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(139, 69, 19, 0.3); /* Brown border */
+}
 
-        .school-item:hover {
-            transform: scale(1.05);
-        }
+.school-item:hover {
+    transform: scale(1.08);
+    background: rgba(255, 255, 255, 0.15);
+    box-shadow: 0 8px 20px rgba(139, 69, 19, 0.3); /* Brown glow */
+}
 
-        .school-logo {
-            width: 60px;
-            height: 60px;
-            border-radius: 10px;
-            margin-bottom: 10px;
-            object-fit: cover;
-            border: 2px solid rgba(255, 255, 255, 0.2);
-        }
+.school-logo {
+    width: 120px; /* Doubled from 60px */
+    height: 120px; /* Doubled from 60px */
+    border-radius: 12px;
+    object-fit: contain; /* Changed from cover to maintain aspect ratio */
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    padding: 10px;
+    background: rgba(255, 255, 255, 0.05);
+    transition: all 0.3s ease;
+}
 
-        @keyframes slide {
-            0% { transform: translateX(0); }
-            100% { transform: translateX(-100%); }
-        }
+.school-item:hover .school-logo {
+    transform: scale(1.1);
+    border-color: rgba(139, 69, 19, 0.6); /* Brown border on hover */
+    background: rgba(255, 255, 255, 0.1);
+}
+
+@keyframes slide {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); } /* Changed from -100% for smoother loop */
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .schools-track {
+        gap: 30px;
+        animation-duration: 15s;
+    }
+    
+    .school-item {
+        min-width: 220px;
+        height: 150px;
+    }
+    
+    .school-logo {
+        width: 90px;
+        height: 90px;
+    }
+}
+
+@media (max-width: 480px) {
+    .schools-slider {
+        padding: 20px 0;
+    }
+    
+    .school-item {
+        min-width: 180px;
+        height: 120px;
+    }
+    
+    .school-logo {
+        width: 70px;
+        height: 70px;
+    }
+}
 
         /* Action Buttons */
         .action-btn {
-            background: linear-gradient(45deg, #54a8fc, #4ecdc4);
+            background: linear-gradient(45deg, #8B4513, #A0522D);
             color: white;
             border: none;
             padding: 15px 30px;
@@ -585,21 +673,21 @@
             display: inline-flex;
             align-items: center;
             gap: 10px;
-            box-shadow: 0 4px 15px rgba(84, 168, 252, 0.3);
+            box-shadow: 0 4px 15px rgba(139, 69, 19, 0.3);
             margin: 10px;
         }
 
         .action-btn:hover {
             transform: translateY(-3px);
-            box-shadow: 0 8px 25px rgba(84, 168, 252, 0.4);
+            box-shadow: 0 8px 25px rgba(139, 69, 19, 0.4);
         }
 
         .action-btn.secondary {
-            background: linear-gradient(45deg, #ff6b6b, #feca57);
+            background: linear-gradient(45deg, #A0522D, #D2B48C);
         }
 
         .action-btn.secondary:hover {
-            box-shadow: 0 8px 25px rgba(255, 107, 107, 0.4);
+            box-shadow: 0 8px 25px rgba(160, 82, 45, 0.4);
         }
 
         /* Section backgrounds */
@@ -617,7 +705,7 @@
         }
 
         ::-webkit-scrollbar-thumb {
-            background: linear-gradient(45deg, #54a8fc, #4ecdc4);
+            background: linear-gradient(45deg, #8B4513, #A0522D);
             border-radius: 4px;
         }
 
@@ -628,7 +716,7 @@
             top: 0;
             left: 0;
             height: 4px;
-            background: linear-gradient(90deg, #54a8fc, #4ecdc4);
+            background: linear-gradient(90deg, #8B4513, #A0522D);
             width: var(--scroll-percent, 0%);
             z-index: 9999;
             transition: width 0.1s ease-out;
@@ -647,7 +735,7 @@
         }
 
         /* Loading state */
-        body:not(.loaded) .flip-card,
+        body:not(.loaded) .course-container,
         body:not(.loaded) .team-card,
         body:not(.loaded) .program-card {
             opacity: 0;
@@ -657,15 +745,213 @@
 
         /* Keyboard navigation focus styles */
         .keyboard-navigation *:focus {
-            outline: 2px solid #54a8fc !important;
+            outline: 2px solid #8B4513 !important;
             outline-offset: 2px !important;
         }
 
-        /* ENHANCED Mobile Responsive Design */
+        /* Logo Styles */
+        .logo-container {
+            display: flex;
+            align-items: center;
+        }
+
+        .logo-img {
+            width: 300px;
+            height: 69px;
+            object-fit: contain;
+            margin-right: 10px;
+        }
+
+        .logo-text {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 24px;
+            font-weight: bold;
+            color: black;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+        }
+
+         @media (max-width: 768px) {
+            .logo-img {
+                width: 200px;
+                height: 46px;
+            }
+            .logo-text {
+                font-size: 18px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .logo-img {
+                width: 150px;
+                height: 35px;
+            }
+            .logo-text {
+                font-size: 16px;
+            }
+        }
+
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            z-index: 10000;
+            justify-content: center;
+            align-items: center;
+            backdrop-filter: blur(5px);
+            overflow-y: auto;
+            padding: 20px;
+        }
+
+        .modal-content {
+            background: linear-gradient(145deg, #3C2A21, #1A120B);
+            padding: 30px;
+            border-radius: 15px;
+            width: 100%;
+            max-width: 500px;
+            max-height: 90vh;
+            overflow-y: auto;
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            position: relative;
+            color: white;
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            font-size: 24px;
+            color: #A0522D;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            z-index: 1;
+        }
+
+        .close-modal:hover {
+            transform: rotate(90deg);
+            color: #8B4513;
+        }
+
+        /* Form Styles */
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #8B4513;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            font-size: 16px;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #8B4513;
+            box-shadow: 0 0 10px rgba(139, 69, 19, 0.3);
+        }
+
+        .form-group option {
+            background: #3C2A21;
+            color: white;
+        }
+
+        .submit-btn {
+            background: transparent;
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 0;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.5s ease;
+            position: relative;
+            overflow: hidden;
+            width: 100%;
+            font-size: 16px;
+            margin-top: 15px;
+            border-bottom: 2px solid rgba(139, 69, 19, 0.3);
+        }
+
+        .submit-btn::before {
+            content: "";
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            height: 2px;
+            width: 0;
+            background-color: #8B4513;
+            transition: 0.5s ease;
+        }
+
+        .submit-btn:hover {
+            color: white;
+            background: transparent;
+        }
+
+        .submit-btn:hover::before {
+            width: 100%;
+        }
+
+        .submit-btn::after {
+            content: "";
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            height: 0;
+            width: 100%;
+            background-color: rgba(139, 69, 19, 0.2);
+            transition: 0.4s ease;
+            z-index: -1;
+        }
+
+        .submit-btn:hover::after {
+            height: 100%;
+            transition-delay: 0.4s;
+        }
+
+        /* Course Video Section */
+        .course-video {
+            width: 100%;
+            margin-top: 20px;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .course-video video {
+            width: 100%;
+            display: block;
+        }
+
+        /* Mobile Responsive Design */
         @media (max-width: 768px) {
+            .sidebar {
+                width: 250px;
+            }
+
             .nav-container {
                 padding: 0.5rem 0.8rem;
-                width: 98%;
+                width: 95%;
                 border-radius: 1.5rem;
                 top: 5px;
             }
@@ -702,17 +988,12 @@
                 line-height: 1.6;
             }
 
-            /* MOBILE FLIP CARDS */
-            .flip-card {
+            /* MOBILE COURSE CARDS */
+            .course-container {
                 width: 95%;
                 max-width: 320px;
                 height: 540px;
                 margin: 15px auto;
-            }
-
-            .flip-card-front,
-            .flip-card-back {
-                padding: 20px 18px;
             }
 
             .course-title {
@@ -734,7 +1015,7 @@
             .enroll-btn {
                 padding: 18px 24px;
                 font-size: 16px;
-                border-radius: 15px;
+                border-radius: 0;
                 font-weight: 800;
             }
 
@@ -799,6 +1080,20 @@
                 max-height: 85vh;
                 margin: 10px;
             }
+
+            /* Show menu toggle on mobile */
+            .menu-toggle {
+                display: block;
+            }
+
+            /* Hide some nav items on mobile */
+            .nav-item:not(:first-child) {
+                display: none;
+            }
+
+            .nav-item:first-child {
+                margin-right: auto;
+            }
         }
 
         @media (max-width: 480px) {
@@ -837,14 +1132,9 @@
             }
 
             /* VERY SMALL MOBILE CARDS */
-            .flip-card {
+            .course-container {
                 width: 98%;
                 height: 520px;
-            }
-
-            .flip-card-front,
-            .flip-card-back {
-                padding: 18px 15px;
             }
 
             .course-title {
@@ -908,10 +1198,6 @@
                 animation: none;
             }
 
-            .flip-card:hover .flip-card-inner {
-                transform: none;
-            }
-
             .fade-in {
                 transition: none !important;
             }
@@ -919,10 +1205,6 @@
 
         /* Touch-friendly hover effects for mobile */
         @media (hover: none) and (pointer: coarse) {
-            .flip-card:active .flip-card-inner {
-                transform: rotateY(180deg);
-            }
-            
             .enroll-btn:active {
                 transform: scale(0.95);
             }
@@ -934,6 +1216,30 @@
     </style>
 </head>
 <body class="dark-mode">
+    <!-- Sidebar Menu -->
+    <div class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <div class="logo-container">
+                <img src="logo.png" alt="Stellar Skills Logo" class="logo-img w-20 h-auto">
+            </div>
+            <button class="close-sidebar" id="closeSidebar">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        <ul class="sidebar-menu">
+            <li><a href="index.html"><i class="fas fa-home"></i> Home</a></li>
+            <li><a href="aboutus.html"><i class="fas fa-info-circle"></i> About Us</a></li>
+            <li><a href="courses.html"><i class="fas fa-book"></i> Courses</a></li>
+            <li><a href="index.html#automation"><i class="fas fa-robot"></i> Automation Services</a></li>
+            <li><a href="#programs"><i class="fas fa-laptop-code"></i> Programs</a></li>
+            <li><a href="#testimonials"><i class="fas fa-comment-alt"></i> Testimonials</a></li>
+            <li><a href="#contact"><i class="fas fa-envelope"></i> Contact</a></li>
+        </ul>
+    </div>
+
+    <!-- Overlay for sidebar -->
+    <div class="overlay" id="overlay"></div>
+
     <!-- 3D Background Canvas -->
     <canvas id="bg-canvas"></canvas>
 
@@ -941,18 +1247,23 @@
     <nav class="nav-container">
         <ul class="nav-menu">
             <li class="nav-item flex items-center">
-                <img src="logo.png" alt="Stellar Skills Logo" class="w-6 h-6 md:w-8 md:h-8 rounded-full mr-2">
-                <span class="text-white font-bold text-xs md:text-sm">Stellar Skills</span>
+                <button class="menu-toggle" id="menuToggle">
+                    <i class="fas fa-bars"></i>
+                </button>
+                <div class="logo-container">
+                    <img src="logo.png" alt="Stellar Skills Logo" class="logo-img">
+                </div>
             </li>
-            <li class="nav-item"><a href="STELLAR.html" class="text-white hover:text-blue-400 transition-colors">Home</a></li>
-            <li class="nav-item"><a href="aboutus.html#about" class="text-white hover:text-blue-400 transition-colors">About</a></li>
-            <li class="nav-item"><a href="#programs" class="text-white hover:text-blue-400 transition-colors">Programs</a></li>
-            <li class="nav-item"><a href="#courses" class="text-white hover:text-blue-400 transition-colors">Courses</a></li>
-            <li class="nav-item"><a href="#contact" class="text-white hover:text-blue-400 transition-colors">Contact</a></li>
+            <li class="nav-item"><a href="index.html">Home</a></li>
+            <li class="nav-item"><a href="aboutus.html">About</a></li>
+            <li class="nav-item"><a href="#programs">Programs</a></li>
+            <li class="nav-item"><a href="courses.html">Courses</a></li>
+            <li class="nav-item"><a href="#contact">Contact</a></li>
         </ul>
     </nav>
 
-    <!-- Hero Section -->
+
+ <!-- Hero Section -->
     <section class="hero">
         <div class="hero-content">
             <h1>Our Courses</h1>
@@ -964,64 +1275,50 @@
                 <a href="#courses" class="action-btn">
                     <i class="fas fa-rocket"></i>Explore Courses
                 </a>
-                <a href="index.html" class="action-btn secondary">
-                    <i class="fas fa-compass"></i>Learn More About Us
-                </a>
+                <button class="action-btn secondary" id="heroEnrollBtn">
+                    <i class="fas fa-user-graduate"></i>Enroll Now
+                </button>
             </div>
         </div>
     </section>
 
-    <!-- Trusted Schools Section -->
-    <section class="py-20 section-dark">
-        <div class="container mx-auto px-6">
-            <h2 class="text-3xl md:text-4xl font-bold text-center mb-12 text-white">Trusted by Leading Schools</h2>
-            <div class="schools-slider">
-                <div class="schools-track">
-                    <div class="school-item">
-                        <img src="school1.jpeg" alt="School 1" class="school-logo">
-                        <span>Aims Academy</span>
-                    </div>
-                    <div class="school-item">
-                        <img src="school2.jpeg" alt="School 2" class="school-logo">
-                        <span>Royal School System</span>
-                    </div>
-                    <div class="school-item">
-                        <img src="school3.jpeg" alt="School 3" class="school-logo">
-                        <span>Royal School System</span>
-                    </div>
-                    <div class="school-item">
-                        <img src="school4.jpeg" alt="School 4" class="school-logo">
-                        <span>KIPS School</span>
-                    </div>
-                    <div class="school-item">
-                        <img src="school5.jpeg" alt="School 5" class="school-logo">
-                        <span>LAPS</span>
-                    </div>
-                    <!-- Duplicate for seamless loop -->
-                    <div class="school-item">
-                        <img src="school1.jpeg" alt="School 1" class="school-logo">
-                        <span>Aims Academy</span>
-                    </div>
-                    <div class="school-item">
-                        <img src="school2.jpeg" alt="School 2" class="school-logo">
-                        <span>Royal School System</span>
-                    </div>
-                    <div class="school-item">
-                        <img src="school3.jpeg" alt="School 3" class="school-logo">
-                        <span>Royal School System</span>
-                    </div>
-                    <div class="school-item">
-                        <img src="school4.jpeg" alt="School 4" class="school-logo">
-                        <span>KIPS School</span>
-                    </div>
-                    <div class="school-item">
-                        <img src="school5.jpeg" alt="School 5" class="school-logo">
-                        <span>LAPS</span>
-                    </div>
-                </div>
+   <!-- Trusted Schools Section -->
+<section class="py-20 bg-black">
+    <div class="container mx-auto px-6">
+        <h2 class="text-4xl md:text-5xl font-bold text-center mb-12 text-white">
+            Trusted by Leading Institutions
+        </h2>
+        <div class="schools-slider overflow-hidden relative">
+            <div class="schools-track flex whitespace-nowrap animate-slide">
+                <!-- School Logos Only (No text) -->
+                <img src="school1.jpeg" alt="School 1" class="school-logo mx-4">
+                <img src="school2.jpeg" alt="School 2" class="school-logo mx-4">
+                <img src="school3.jpeg" alt="School 3" class="school-logo mx-4">
+                <img src="school4.jpeg" alt="School 4" class="school-logo mx-4">
+                <img src="school5.jpeg" alt="School 5" class="school-logo mx-4">
+                <img src="school6.jpeg" alt="School 6" class="school-logo mx-4">
+                <img src="school7.jpeg" alt="School 7" class="school-logo mx-4">
+                <img src="school8.jpeg" alt="School 8" class="school-logo mx-4">
+                <img src="school9.jpeg" alt="School 9" class="school-logo mx-4">
+                <img src="school10.jpeg" alt="School 10" class="school-logo mx-4">
+                <img src="school11.jpeg" alt="School 11" class="school-logo mx-4">
+                
+                <!-- Duplicate for smooth looping -->
+                <img src="school1.jpeg" alt="School 1" class="school-logo mx-4">
+                <img src="school2.jpeg" alt="School 2" class="school-logo mx-4">
+                <img src="school3.jpeg" alt="School 3" class="school-logo mx-4">
+                <img src="school4.jpeg" alt="School 4" class="school-logo mx-4">
+                <img src="school5.jpeg" alt="School 5" class="school-logo mx-4">
+                <img src="school6.jpeg" alt="School 6" class="school-logo mx-4">
+                <img src="school7.jpeg" alt="School 7" class="school-logo mx-4">
+                <img src="school8.jpeg" alt="School 8" class="school-logo mx-4">
+                <img src="school9.jpeg" alt="School 9" class="school-logo mx-4">
+                <img src="school10.jpeg" alt="School 10" class="school-logo mx-4">
+                <img src="school11.jpeg" alt="School 11" class="school-logo mx-4">
             </div>
         </div>
-    </section>
+    </div>
+</section>
 
     <!-- Courses Section -->
     <section id="courses" class="py-20">
@@ -1029,236 +1326,145 @@
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 justify-items-center">
                 
                 <!-- Course 1: Basic Robotics -->
-                <div class="flip-card fade-in">
-                    <div class="flip-card-inner">
-                        <div class="flip-card-front">
-                            <div class="course-title">Basic Robotics</div>
-                            <div class="course-age">Ages 6-8</div>
-                            <div class="course-modules">10 Modules</div>
-                            <div class="course-duration">6-8 Weeks</div>
-                            <div class="course-price">Rs 7,000</div>
-                            <div class="course-highlights">
-                                <h4>Course Highlights</h4>
-                                <ul>
-                                    <li><i class="fas fa-robot"></i> Robot Assembly Basics</li>
-                                    <li><i class="fas fa-code"></i> Block Programming</li>
-                                    <li><i class="fas fa-bolt"></i> Simple Circuits</li>
-                                    <li><i class="fas fa-play-circle"></i> Interactive Activities</li>
-                                    <li><i class="fas fa-award"></i> Certificate of Completion</li>
-                                </ul>
-                            </div>
-                            <button class="enroll-btn" data-course="Basic Robotics">Enroll Now</button>
+                <div class="course-container fade-in">
+                    <div class="course-card">
+                        <img src="image1.png" alt="Basic Robotics" class="course-image">
+                        <div class="course-title ">Basic Robotics</div>
+                        <div class="course-age">Ages 6-8</div>
+                        <div class="course-modules">10 Modules</div>
+                        <div class="course-duration">6-8 Weeks</div>
+                        <div class="course-price">Rs 7,000</div>
+                        <div class="course-highlights">
+                            <h4>Course Highlights</h4>
+                            <ul>
+                                <li><i class="fas fa-robot"></i> Robot Assembly Basics</li>
+                                <li><i class="fas fa-code"></i> Block Programming</li>
+                                <li><i class="fas fa-bolt"></i> Simple Circuits</li>
+                                <li><i class="fas fa-play-circle"></i> Interactive Activities</li>
+                                <li><i class="fas fa-award"></i> Certificate of Completion</li>
+                            </ul>
                         </div>
-                        <div class="flip-card-back">
-                            <h3 class="text-xl font-bold mb-4">Basic Robotics</h3>
-                            <p class="text-gray-300 mb-6">Perfect introduction to robotics for young learners. Hands-on projects make learning fun and engaging.</p>
-                            <div class="course-highlights">
-                                <h4>What You'll Learn</h4>
-                                <ul>
-                                    <li><i class="fas fa-check"></i> Build simple robots</li>
-                                    <li><i class="fas fa-check"></i> Understand basic mechanics</li>
-                                    <li><i class="fas fa-check"></i> Learn block-based coding</li>
-                                    <li><i class="fas fa-check"></i> Work with sensors</li>
-                                    <li><i class="fas fa-check"></i> Complete fun challenges</li>
-                                </ul>
-                            </div>
-                            <button class="enroll-btn" data-course="Basic Robotics">Enroll Now</button>
-                        </div>
+                        <button class="enroll-btn" data-course="Basic Robotics">Enroll Now</button>
+                       
                     </div>
                 </div>
                 
                 <!-- Course 2: Coding Adventure -->
-                <div class="flip-card fade-in">
-                    <div class="flip-card-inner">
-                        <div class="flip-card-front">
-                            <div class="course-title">Coding Adventure</div>
-                            <div class="course-age">Ages 9-11</div>
-                            <div class="course-modules">15 Modules</div>
-                            <div class="course-duration">8-10 Weeks</div>
-                            <div class="course-price">Rs 9,000</div>
-                            <div class="course-highlights">
-                                <h4>Course Highlights</h4>
-                                <ul>
-                                    <li><i class="fas fa-gamepad"></i> Game Development</li>
-                                    <li><i class="fab fa-python"></i> Python Basics</li>
-                                    <li><i class="fas fa-laptop-code"></i> Web Fundamentals</li>
-                                    <li><i class="fas fa-puzzle-piece"></i> Logic Building</li>
-                                    <li><i class="fas fa-project-diagram"></i> Creative Projects</li>
-                                </ul>
-                            </div>
-                            <button class="enroll-btn" data-course="Coding Adventure">Enroll Now</button>
+                <div class="course-container fade-in">
+                    <div class="course-card">
+                        <img src="image2.png" alt="Coding Adventure" class="course-image">
+                        <div class="course-title">Coding Adventure</div>
+                        <div class="course-age">Ages 9-11</div>
+                        <div class="course-modules">15 Modules</div>
+                        <div class="course-duration">8-10 Weeks</div>
+                        <div class="course-price">Rs 9,000</div>
+                        <div class="course-highlights">
+                            <h4>Course Highlights</h4>
+                            <ul>
+                                <li><i class="fas fa-gamepad"></i> Game Development</li>
+                                <li><i class="fab fa-python"></i> Python Basics</li>
+                                <li><i class="fas fa-laptop-code"></i> Web Fundamentals</li>
+                                <li><i class="fas fa-puzzle-piece"></i> Logic Building</li>
+                                <li><i class="fas fa-project-diagram"></i> Creative Projects</li>
+                            </ul>
                         </div>
-                        <div class="flip-card-back">
-                            <h3 class="text-xl font-bold mb-4">Coding Adventure</h3>
-                            <p class="text-gray-300 mb-6">Discover the joy of coding through interactive projects and games. Perfect for beginners.</p>
-                            <div class="course-highlights">
-                                <h4>What You'll Learn</h4>
-                                <ul>
-                                    <li><i class="fas fa-check"></i> Create simple games</li>
-                                    <li><i class="fas fa-check"></i> Python fundamentals</li>
-                                    <li><i class="fas fa-check"></i> Web development basics</li>
-                                    <li><i class="fas fa-check"></i> Problem-solving skills</li>
-                                    <li><i class="fas fa-check"></i> Debugging techniques</li>
-                                </ul>
-                            </div>
-                            <button class="enroll-btn" data-course="Coding Adventure">Enroll Now</button>
-                        </div>
+                        <button class="enroll-btn" data-course="Coding Adventure">Enroll Now</button>
+                       
                     </div>
                 </div>
                 
                 <!-- Course 3: RoboExplorers -->
-                <div class="flip-card fade-in">
-                    <div class="flip-card-inner">
-                        <div class="flip-card-front">
-                            <div class="course-title">RoboExplorers</div>
-                            <div class="course-age">Ages 12-14</div>
-                            <div class="course-modules">20 Modules</div>
-                            <div class="course-duration">10-12 Weeks</div>
-                            <div class="course-price">Rs 12,000</div>
-                            <div class="course-highlights">
-                                <h4>Course Highlights</h4>
-                                <ul>
-                                    <li><i class="fas fa-satellite"></i> Sensor Integration</li>
-                                    <li><i class="fas fa-car"></i> Autonomous Vehicles</li>
-                                    <li><i class="fas fa-microchip"></i> Circuit Design</li>
-                                    <li><i class="fas fa-wifi"></i> IoT Basics</li>
-                                    <li><i class="fas fa-trophy"></i> Competition Prep</li>
-                                </ul>
-                            </div>
-                            <button class="enroll-btn" data-course="RoboExplorers">Enroll Now</button>
+                <div class="course-container fade-in">
+                    <div class="course-card">
+                        <img src="image3.png" alt="RoboExplorers" class="course-image">
+                        <div class="course-title">RoboExplorers</div>
+                        <div class="course-age">Ages 12-14</div>
+                        <div class="course-modules">20 Modules</div>
+                        <div class="course-duration">10-12 Weeks</div>
+                        <div class="course-price">Rs 12,000</div>
+                        <div class="course-highlights">
+                            <h4>Course Highlights</h4>
+                            <ul>
+                                <li><i class="fas fa-satellite"></i> Sensor Integration</li>
+                                <li><i class="fas fa-car"></i> Autonomous Vehicles</li>
+                                <li><i class="fas fa-microchip"></i> Circuit Design</li>
+                                <li><i class="fas fa-wifi"></i> IoT Basics</li>
+                                <li><i class="fas fa-trophy"></i> Competition Prep</li>
+                            </ul>
                         </div>
-                        <div class="flip-card-back">
-                            <h3 class="text-xl font-bold mb-4">RoboExplorers</h3>
-                            <p class="text-gray-300 mb-6">Intermediate robotics course focusing on autonomous systems and sensor integration.</p>
-                            <div class="course-highlights">
-                                <h4>What You'll Learn</h4>
-                                <ul>
-                                    <li><i class="fas fa-check"></i> Advanced robotics concepts</li>
-                                    <li><i class="fas fa-check"></i> Sensor integration</li>
-                                    <li><i class="fas fa-check"></i> Autonomous navigation</li>
-                                    <li><i class="fas fa-check"></i> Circuit design</li>
-                                    <li><i class="fas fa-check"></i> Competition strategies</li>
-                                </ul>
-                            </div>
-                            <button class="enroll-btn" data-course="RoboExplorers">Enroll Now</button>
-                        </div>
+                        <button class="enroll-btn" data-course="RoboExplorers">Enroll Now</button>
+                      
                     </div>
                 </div>
 
                 <!-- Course 4: Robotics Innovators -->
-                <div class="flip-card fade-in">
-                    <div class="flip-card-inner">
-                        <div class="flip-card-front">
-                            <div class="course-title">Robotics Innovators</div>
-                            <div class="course-age">Ages 15-16</div>
-                            <div class="course-modules">10 Modules</div>
-                            <div class="course-duration">8-10 Weeks</div>
-                            <div class="course-price">Rs 15,000</div>
-                            <div class="course-highlights">
-                                <h4>Course Highlights</h4>
-                                <ul>
-                                    <li><i class="fas fa-brain"></i> AI & Machine Learning</li>
-                                    <li><i class="fas fa-eye"></i> Computer Vision</li>
-                                    <li><i class="fas fa-mobile-alt"></i> Mobile Robotics</li>
-                                    <li><i class="fas fa-network-wired"></i> Advanced Sensors</li>
-                                    <li><i class="fas fa-lightbulb"></i> Innovation Projects</li>
-                                </ul>
-                            </div>
-                            <button class="enroll-btn" data-course="Robotics Innovators">Enroll Now</button>
+                <div class="course-container fade-in">
+                    <div class="course-card">
+                        <img src="image4.jpg" alt="Robotics Innovators" class="course-image">
+                        <div class="course-title">Robotics Innovators</div>
+                        <div class="course-age">Ages 15-16</div>
+                        <div class="course-modules">10 Modules</div>
+                        <div class="course-duration">8-10 Weeks</div>
+                        <div class="course-price">Rs 15,000</div>
+                        <div class="course-highlights">
+                            <h4>Course Highlights</h4>
+                            <ul>
+                                <li><i class="fas fa-brain"></i> AI & Machine Learning</li>
+                                <li><i class="fas fa-eye"></i> Computer Vision</li>
+                                <li><i class="fas fa-mobile-alt"></i> Mobile Robotics</li>
+                                <li><i class="fas fa-network-wired"></i> Advanced Sensors</li>
+                                <li><i class="fas fa-lightbulb"></i> Innovation Projects</li>
+                            </ul>
                         </div>
-                        <div class="flip-card-back">
-                            <h3 class="text-xl font-bold mb-4">Robotics Innovators</h3>
-                            <p class="text-gray-300 mb-6">Advanced course introducing AI and machine learning concepts in robotics.</p>
-                            <div class="course-highlights">
-                                <h4>What You'll Learn</h4>
-                                <ul>
-                                    <li><i class="fas fa-check"></i> AI fundamentals</li>
-                                    <li><i class="fas fa-check"></i> Computer vision</li>
-                                    <li><i class="fas fa-check"></i> Machine learning basics</li>
-                                    <li><i class="fas fa-check"></i> Advanced robotics</li>
-                                    <li><i class="fas fa-check"></i> Innovation techniques</li>
-                                </ul>
-                            </div>
-                            <button class="enroll-btn" data-course="Robotics Innovators">Enroll Now</button>
-                        </div>
+                        <button class="enroll-btn" data-course="Robotics Innovators">Enroll Now</button>
+                      
                     </div>
                 </div>
 
                 <!-- Course 5: Tech Builders -->
-                <div class="flip-card fade-in">
-                    <div class="flip-card-inner">
-                        <div class="flip-card-front">
-                            <div class="course-title">Tech Builders</div>
-                            <div class="course-age">Ages 17-18</div>
-                            <div class="course-modules">15 Modules</div>
-                            <div class="course-duration">10-12 Weeks</div>
-                            <div class="course-price">Rs 17,000</div>
-                            <div class="course-highlights">
-                                <h4>Course Highlights</h4>
-                                <ul>
-                                    <li><i class="fas fa-cogs"></i> Advanced Programming</li>
-                                    <li><i class="fas fa-database"></i> Data Structures</li>
-                                    <li><i class="fas fa-cloud"></i> Cloud Integration</li>
-                                    <li><i class="fas fa-shield-alt"></i> Cybersecurity Basics</li>
-                                    <li><i class="fas fa-graduation-cap"></i> Industry Preparation</li>
-                                </ul>
-                            </div>
-                            <button class="enroll-btn" data-course="Tech Builders">Enroll Now</button>
+                <div class="course-container fade-in">
+                    <div class="course-card">
+                        <img src="image5.jpg" alt="Tech Builders" class="course-image">
+                        <div class="course-title">Tech Builders</div>
+                        <div class="course-age">Ages 17-18</div>
+                        <div class="course-modules">15 Modules</div>
+                        <div class="course-duration">10-12 Weeks</div>
+                        <div class="course-price">Rs 17,000</div>
+                        <div class="course-highlights">
+                            <h4>Course Highlights</h4>
+                            <ul>
+                                <li><i class="fas fa-cogs"></i> Advanced Programming</li>
+                                <li><i class="fas fa-database"></i> Data Structures</li>
+                                <li><i class="fas fa-cloud"></i> Cloud Integration</li>
+                                <li><i class="fas fa-shield-alt"></i> Cybersecurity Basics</li>
+                                <li><i class="fas fa-graduation-cap"></i> Industry Preparation</li>
+                            </ul>
                         </div>
-                        <div class="flip-card-back">
-                            <h3 class="text-xl font-bold mb-4">Tech Builders</h3>
-                            <p class="text-gray-300 mb-6">Comprehensive program preparing students for tech careers with advanced concepts.</p>
-                            <div class="course-highlights">
-                                <h4>What You'll Learn</h4>
-                                <ul>
-                                    <li><i class="fas fa-check"></i> Advanced algorithms</li>
-                                    <li><i class="fas fa-check"></i> Data structures</li>
-                                    <li><i class="fas fa-check"></i> Cloud computing</li>
-                                    <li><i class="fas fa-check"></i> Cybersecurity</li>
-                                    <li><i class="fas fa-check"></i> Career preparation</li>
-                                </ul>
-                            </div>
-                            <button class="enroll-btn" data-course="Tech Builders">Enroll Now</button>
-                        </div>
+                        <button class="enroll-btn" data-course="Tech Builders">Enroll Now</button>
+                       
                     </div>
                 </div>
 
                 <!-- Course 6: Robotics Engineers -->
-                <div class="flip-card fade-in">
-                    <div class="flip-card-inner">
-                        <div class="flip-card-front">
-                            <div class="course-title">Robotics Engineers</div>
-                            <div class="course-age">Ages 19-20</div>
-                            <div class="course-modules">20 Modules</div>
-                            <div class="course-duration">12-16 Weeks</div>
-                            <div class="course-price">Rs 20,000</div>
-                            <div class="course-highlights">
-                                <h4>Course Highlights</h4>
-                                <ul>
-                                    <li><i class="fas fa-industry"></i> Industrial Robotics</li>
-                                    <li><i class="fas fa-calculator"></i> Advanced Mathematics</li>
-                                    <li><i class="fas fa-tools"></i> Professional Tools</li>
-                                    <li><i class="fas fa-briefcase"></i> Career Guidance</li>
-                                    <li><i class="fas fa-certificate"></i> Professional Certification</li>
-                                </ul>
-                            </div>
-                            <button class="enroll-btn" data-course="Robotics Engineers">Enroll Now</button>
+                <div class="course-container fade-in">
+                    <div class="course-card">
+                        <img src="image6.jpg" alt="Robotics Engineers" class="course-image">
+                        <div class="course-title">Robotics Engineers</div>
+                        <div class="course-age">Ages 19-20</div>
+                        <div class="course-modules">20 Modules</div>
+                        <div class="course-duration">12-16 Weeks</div>
+                        <div class="course-price">Rs 20,000</div>
+                        <div class="course-highlights">
+                            <h4>Course Highlights</h4>
+                            <ul>
+                                <li><i class="fas fa-industry"></i> Industrial Robotics</li>
+                                <li><i class="fas fa-calculator"></i> Advanced Mathematics</li>
+                                <li><i class="fas fa-tools"></i> Professional Tools</li>
+                                <li><i class="fas fa-briefcase"></i> Career Guidance</li>
+                                <li><i class="fas fa-certificate"></i> Professional Certification</li>
+                            </ul>
                         </div>
-                        <div class="flip-card-back">
-                            <h3 class="text-xl font-bold mb-4">Robotics Engineers</h3>
-                            <p class="text-gray-300 mb-6">Professional-level training for aspiring robotics engineers and industry professionals.</p>
-                            <div class="course-highlights">
-                                <h4>What You'll Learn</h4>
-                                <ul>
-                                    <li><i class="fas fa-check"></i> Industrial robotics</li>
-                                    <li><i class="fas fa-check"></i> Advanced mathematics</li>
-                                    <li><i class="fas fa-check"></i> Professional tools</li>
-                                    <li><i class="fas fa-check"></i> Career guidance</li>
-                                    <li><i class="fas fa-check"></i> Certification prep</li>
-                                </ul>
-                            </div>
-                            <button class="enroll-btn" data-course="Robotics Engineers">Enroll Now</button>
-                        </div>
+                        <button class="enroll-btn" data-course="Robotics Engineers">Enroll Now</button>                      
                     </div>
                 </div>
             </div>
@@ -1286,11 +1492,11 @@
                        
                     <div class="flex justify-center space-x-3">
                         
-                         <a href="https://www.linkedin.com/company/stellar-skills-pvt-ltd/" 
+                        <a href="https://wa.me/923265011116" 
                          target="_blank" 
-                         class="w-10 h-10 bg-blue-600 rounded-full flex items-center justify-center text-white hover:bg-blue-700 transition-colors"
-                         aria-label="LinkedIn">
-                         <i class="fab fa-linkedin-in"></i>
+                         class="w-10 h-10 bg-green-500 rounded-full flex items-center justify-center text-white hover:bg-green-600 transition-colors"
+                         aria-label="WhatsApp">
+                         <i class="fab fa-whatsapp"></i>
                         </a>
                         <a href="info@stellarskills.com" 
                         class="w-10 h-10 bg-gray-600 rounded-full flex items-center justify-center text-white hover:bg-gray-700 transition-colors"
@@ -1310,11 +1516,11 @@
                    
                     <div class="flex justify-center space-x-3">
                           
-                          <a href="https://www.linkedin.com/company/stellar-skills-pvt-ltd/" 
+                        <a href="https://wa.me/923265011116" 
                          target="_blank" 
-                         class="w-10 h-10 bg-blue-600 rounded-full flex items-center justify-center text-white hover:bg-blue-700 transition-colors"
-                         aria-label="LinkedIn">
-                         <i class="fab fa-linkedin-in"></i>
+                         class="w-10 h-10 bg-green-500 rounded-full flex items-center justify-center text-white hover:bg-green-600 transition-colors"
+                         aria-label="WhatsApp">
+                         <i class="fab fa-whatsapp"></i>
                         </a>
                         <a href="info@stellarskills.com" 
                         class="w-10 h-10 bg-gray-600 rounded-full flex items-center justify-center text-white hover:bg-gray-700 transition-colors"
@@ -1340,7 +1546,7 @@
             
             <div class="flex flex-wrap justify-center gap-8">
                 <!-- Testimonial 1 -->
-                <div class="testimonial-card fade-in" style="--background: linear-gradient(to left, #f7ba2b 0%, #ea5358 100%);">
+                <div class="testimonial-card fade-in" style="--background: linear-gradient(to left, #8B4513 0%, #A0522D 100%);">
                     <div class="testimonial-info">
                         <div>
                             <div class="title">Amazing Experience!</div>
@@ -1368,7 +1574,7 @@
                 </div>
 
                 <!-- Testimonial 2 -->
-                <div class="testimonial-card fade-in" style="--background: linear-gradient(to left, #4ecdc4 0%, #54a8fc 100%);">
+                <div class="testimonial-card fade-in" style="--background: linear-gradient(to left, #8B4513 0%, #A0522D 100%);">
                     <div class="testimonial-info">
                         <div>
                             <div class="title">Best Decision Ever!</div>
@@ -1396,7 +1602,7 @@
                 </div>
 
                 <!-- Testimonial 3 -->
-                <div class="testimonial-card fade-in" style="--background: linear-gradient(to left, #ff6b6b 0%, #feca57 100%);">
+                <div class="testimonial-card fade-in" style="--background: linear-gradient(to left, #8B4513 0%, #A0522D 100%);">
                     <div class="testimonial-info">
                         <div>
                             <div class="title">Outstanding Program!</div>
@@ -1437,7 +1643,7 @@
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                 <!-- After School Program -->
                 <div class="program-card fade-in">
-                    <div class="program-icon" style="background: linear-gradient(45deg, #6C63FF, #5a54e6);">
+                    <div class="program-icon" style="background: linear-gradient(45deg, #8B4513, #A0522D);">
                         <i class="fas fa-school"></i>
                     </div>
                     <h3 class="text-2xl font-bold mb-4 text-white">After School</h3>
@@ -1449,7 +1655,7 @@
                 
                 <!-- Virtual Program -->
                 <div class="program-card fade-in">
-                    <div class="program-icon" style="background: linear-gradient(45deg, #00BFA6, #00a693);">
+                    <div class="program-icon" style="background: linear-gradient(45deg, #8B4513, #A0522D);">
                         <i class="fas fa-laptop-house"></i>
                     </div>
                     <h3 class="text-2xl font-bold mb-4 text-white">Virtual Program</h3>
@@ -1461,7 +1667,7 @@
                 
                 <!-- Homeschool Program -->
                 <div class="program-card fade-in">
-                    <div class="program-icon" style="background: linear-gradient(45deg, #FF6584, #ff4f71);">
+                    <div class="program-icon" style="background: linear-gradient(45deg, #8B4513, #A0522D);">
                         <i class="fas fa-home"></i>
                     </div>
                     <h3 class="text-2xl font-bold mb-4 text-white">Homeschool</h3>
@@ -1473,7 +1679,7 @@
 
                 <!-- Summer Program -->
                 <div class="program-card fade-in">
-                    <div class="program-icon" style="background: linear-gradient(45deg, #FFB74D, #FF9800);">
+                    <div class="program-icon" style="background: linear-gradient(45deg, #8B4513, #A0522D);">
                         <i class="fas fa-sun"></i>
                     </div>
                     <h3 class="text-2xl font-bold mb-4 text-white">Summer Camps</h3>
@@ -1485,7 +1691,7 @@
 
                 <!-- Competition Program -->
                 <div class="program-card fade-in">
-                    <div class="program-icon" style="background: linear-gradient(45deg, #E91E63, #C2185B);">
+                    <div class="program-icon" style="background: linear-gradient(45deg, #8B4513, #A0522D);">
                         <i class="fas fa-trophy"></i>
                     </div>
                     <h3 class="text-2xl font-bold mb-4 text-white">Competitions</h3>
@@ -1497,7 +1703,7 @@
 
                 <!-- Online Program -->
                 <div class="program-card fade-in">
-                    <div class="program-icon" style="background: linear-gradient(45deg, #9C27B0, #7B1FA2);">
+                    <div class="program-icon" style="background: linear-gradient(45deg, #8B4513, #A0522D);">
                         <i class="fas fa-globe"></i>
                     </div>
                     <h3 class="text-2xl font-bold mb-4 text-white">Online Learning</h3>
@@ -1518,35 +1724,53 @@
                 <div>
                     <h3 class="text-3xl font-bold mb-8 text-blue-400">Get In Touch</h3>
                     <div class="space-y-6">
-                        <div class="flex items-center space-x-4">
-                            <div class="w-12 h-12 bg-green-500 rounded-full flex items-center justify-center">
-                                <i class="fas fa-phone text-white"></i>
-                            </div>
-                            <div>
-                                <p class="text-white font-semibold">Phone</p>
-                                <p class="text-gray-300">+92 (326) 5011116</p>
-                            </div>
+                        <!-- Phone -->
+                    <div class="flex items-center space-x-4">
+                        <div class="w-12 h-12 bg-green-500 rounded-full flex items-center justify-center">
+                            <i class="fas fa-phone text-white"></i>
                         </div>
-                        <div class="flex items-center space-x-4">
-                            <div class="w-12 h-12 bg-blue-500 rounded-full flex items-center justify-center">
-                                <i class="fas fa-envelope text-white"></i>
-                            </div>
-                            <div>
-                                <p class="text-white font-semibold">Email</p>
-                                <p class="text-gray-300">info@stellarskills.com</p>
-                            </div>
-                        </div>
-                        <div class="flex items-center space-x-4">
-                            <div class="w-12 h-12 bg-red-500 rounded-full flex items-center justify-center">
-                                <i class="fas fa-map-marker-alt text-white"></i>
-                            </div>
-                            <div>
-                                <p class="text-white font-semibold">Address</p>
-                                <p class="text-gray-300">Lahore, Punjab, Pakistan</p>
-                            </div>
+                        <div>
+                            <p class="text-white font-semibold">Phone</p>
+                            <p class="text-gray-300">
+                                <a href="tel:+923265011116" class="hover:text-green-300 transition-colors">
+                                    +92 (326) 5011116
+                                </a>
+                            </p>
                         </div>
                     </div>
+
+                    <!-- Email -->
+                    <div class="flex items-center space-x-4">
+                        <div class="w-12 h-12 bg-blue-500 rounded-full flex items-center justify-center">
+                            <i class="fas fa-envelope text-white"></i>
+                        </div>
+                        <div>
+                            <p class="text-white font-semibold">Email</p>
+                            <p class="text-gray-300">
+                                <a href="mailto:info@stellarskills.com" class="hover:text-blue-300 transition-colors">
+                                    info@stellarskills.com
+                                </a>
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Address -->
+                    <div class="flex items-center space-x-4">
+                        <div class="w-12 h-12 bg-red-500 rounded-full flex items-center justify-center">
+                            <i class="fas fa-map-marker-alt text-white"></i>
+                        </div>
+                        <div>
+                            <p class="text-white font-semibold">Address</p>
+                            <p class="text-gray-300">
+                                <a href="https://maps.app.goo.gl/5Gz6HgX34Q8M4FjN6" target="_blank" class="hover:text-blue-400 transition-colors">
+                                    E-1077-1-A, Nadirabad, Ali park, Lahore Cantt
+                                </a>
+                            </p>
+                        </div>
+                    </div>
+
                 </div>
+            </div>
                 <div class="bg-white bg-opacity-10 p-8 rounded-2xl backdrop-blur-sm">
                     <form class="space-y-6">
                         <div class="form-group">
@@ -1613,10 +1837,11 @@
         <div class="container mx-auto px-4">
             <div class="grid md:grid-cols-4 gap-8">
                 <div>
-                    <div class="flex items-center mb-4">
-                        <img src="logo.png" alt="Stellar Skills Logo" class="w-12 h-12 rounded-full mr-3">
-                        <h3 class="text-xl font-bold text-white">Stellar Skills</h3>
-                    </div>
+                   <div class="bg-white p-2 rounded-lg">
+                        <img src="logo.png" alt="Stellar Skills Logo" class="h-12 w-auto">
+                   </div>
+             <div>
+                 </div>
                     <p class="text-gray-400 mb-4">Empowering the next generation with cutting-edge robotics and programming education.</p>
                     <div class="flex space-x-4">
                         <a href="https://www.facebook.com/stellarskillspvtltd" target="_blank" class="w-10 h-10 bg-blue-600 rounded-full flex items-center justify-center text-white hover:bg-blue-700 transition-colors">
@@ -1633,31 +1858,33 @@
                 <div>
                     <h4 class="text-lg font-semibold text-white mb-4">Quick Links</h4>
                     <ul class="space-y-2">
-                        <li><a href="index.html" class="text-gray-400 hover:text-blue-400 transition-colors">Home</a></li>
-                        <li><a href="index.html#about" class="text-gray-400 hover:text-blue-400 transition-colors">About</a></li>
+                        <li><a href="#home" class="text-gray-400 hover:text-blue-400 transition-colors">Home</a></li>
+                        <li><a href="aboutus.html" class="text-gray-400 hover:text-blue-400 transition-colors">About</a></li>
                         <li><a href="#programs" class="text-gray-400 hover:text-blue-400 transition-colors">Programs</a></li>
-                        <li><a href="#courses" class="text-gray-400 hover:text-blue-400 transition-colors">Courses</a></li>
+                        <li><a href="courses.html" class="text-gray-400 hover:text-blue-400 transition-colors">Courses</a></li>
                         <li><a href="#contact" class="text-gray-400 hover:text-blue-400 transition-colors">Contact</a></li>
                     </ul>
                 </div>
                 <div>
                     <h4 class="text-lg font-semibold text-white mb-4">Courses</h4>
-                    <ul class="space-y-2">
-                        <li><span class="text-gray-400">Basic Robotics</span></li>
-                        <li><span class="text-gray-400">Coding Adventure</span></li>
-                        <li><span class="text-gray-400">RoboExplorers</span></li>
-                        <li><span class="text-gray-400">Robotics Innovators</span></li>
-                        <li><span class="text-gray-400">Tech Builders</span></li>
-                        <li><span class="text-gray-400">Robotics Engineers</span></li>
-                    </ul>
+                  <ul class="space-y-2">
+                   <li><a href="courses.html#basic-robotics" class="text-gray-400 hover:text-blue-400 transition-colors">Basic Robotics</a></li>
+                   <li><a href="courses.html#coding-adventure" class="text-gray-400 hover:text-blue-400 transition-colors">Coding Adventure</a></li>
+                   <li><a href="courses.html#robo-explorers" class="text-gray-400 hover:text-blue-400 transition-colors">RoboExplorers</a></li>
+                   <li><a href="courses.html#robotics-innovators" class="text-gray-400 hover:text-blue-400 transition-colors">Robotics Innovators</a></li>
+                   <li><a href="courses.html#tech-builders" class="text-gray-400 hover:text-blue-400 transition-colors">Tech Builders</a></li>
+                   <li><a href="courses.html#robotics-engineers" class="text-gray-400 hover:text-blue-400 transition-colors">Robotics Engineers</a></li>
+                  </ul>
                 </div>
                 <div>
                     <h4 class="text-lg font-semibold text-white mb-4">Newsletter</h4>
                     <p class="text-gray-400 mb-4">Subscribe to get updates on new courses and programs.</p>
-                    <form class="space-y-3">
-                        <input type="email" placeholder="Your email" class="w-full p-3 bg-white bg-opacity-10 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:border-blue-400">
-                        <button type="submit" class="w-full bg-blue-600 text-white py-3 rounded-lg hover:bg-blue-700 transition-colors">Subscribe</button>
-                    </form>
+                    <div class="newsletter-form">
+                        <form class="space-y-3" id="newsletterForm">
+                            <input type="email" name="newsletter_email" placeholder="Your email" class="w-full p-3 bg-white bg-opacity-10 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:border-blue-400" required>
+                            <button type="submit" class="newsletter-btn">Subscribe</button>
+                        </form>
+                    </div>
                 </div>
             </div>
             <div class="border-t border-gray-700 mt-8 pt-8 text-center">
@@ -1682,7 +1909,7 @@
         // Simplified geometry for better performance
         const geometry = new THREE.TorusGeometry(6, 1.5, 8, 16);
         const material = new THREE.MeshBasicMaterial({ 
-            color: 0x54a8fc,
+            color: 0x8B4513,
             wireframe: true,
             transparent: true,
             opacity: 0.2
@@ -1692,7 +1919,7 @@
 
         const boxGeometry = new THREE.BoxGeometry(3, 3, 3);
         const boxMaterial = new THREE.MeshBasicMaterial({ 
-            color: 0x4ecdc4,
+            color: 0xA0522D,
             wireframe: true,
             transparent: true,
             opacity: 0.15
@@ -1703,7 +1930,7 @@
 
         const sphereGeometry = new THREE.SphereGeometry(4, 16, 16);
         const sphereMaterial = new THREE.MeshBasicMaterial({ 
-            color: 0xff6b6b,
+            color: 0x000000,
             wireframe: true,
             transparent: true,
             opacity: 0.1
@@ -1772,11 +1999,33 @@
             fadeInObserver.observe(el);
         });
 
+        // Sidebar functionality
+        const sidebar = document.getElementById('sidebar');
+        const overlay = document.getElementById('overlay');
+        const menuToggle = document.getElementById('menuToggle');
+        const closeSidebar = document.getElementById('closeSidebar');
+
+        menuToggle.addEventListener('click', function() {
+            sidebar.classList.add('active');
+            overlay.classList.add('active');
+        });
+
+        closeSidebar.addEventListener('click', function() {
+            sidebar.classList.remove('active');
+            overlay.classList.remove('active');
+        });
+
+        overlay.addEventListener('click', function() {
+            sidebar.classList.remove('active');
+            overlay.classList.remove('active');
+        });
+
         // Modal functionality
         const modal = document.getElementById('enrollmentModal');
         const closeModal = document.getElementById('closeModal');
         const enrollmentForm = document.getElementById('enrollmentForm');
         const selectedCourseInput = document.getElementById('selectedCourse');
+        const heroEnrollBtn = document.getElementById('heroEnrollBtn');
         
         // Open modal when enroll button is clicked
         document.querySelectorAll('.enroll-btn').forEach(btn => {
@@ -1786,6 +2035,13 @@
                 modal.style.display = 'flex';
                 document.body.style.overflow = 'hidden';
             });
+        });
+        
+        // Open modal from hero section enroll button
+        heroEnrollBtn.addEventListener('click', () => {
+            selectedCourseInput.value = 'General Inquiry';
+            modal.style.display = 'flex';
+            document.body.style.overflow = 'hidden';
         });
         
         // Close modal
